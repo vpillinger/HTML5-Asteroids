@@ -37,6 +37,8 @@ $(window).keydown(function (e) {
 
 GRID_SIZE = 60;
 
+LINE_COLOR = '#e43800';
+
 Matrix = function (rows, columns) {
   var i, j;
   this.data = new Array(rows);
@@ -243,6 +245,7 @@ Sprite = function () {
     }
 
     this.context.closePath();
+    this.context.strokeStyle = LINE_COLOR;
     this.context.stroke();
   };
   this.findCollisionCanidates = function () {
@@ -586,12 +589,14 @@ Bullet = function () {
   this.draw = function () {
     if (this.visible) {
       this.context.save();
+      this.context.strokeStyle = "#e43800";
       this.context.lineWidth = 2;
       this.context.beginPath();
       this.context.moveTo(this.x-1, this.y-1);
       this.context.lineTo(this.x+1, this.y+1);
       this.context.moveTo(this.x+1, this.y-1);
       this.context.lineTo(this.x-1, this.y+1);
+      this.context.strokeStyle = LINE_COLOR;
       this.context.stroke();
       this.context.restore();
     }
@@ -624,10 +629,12 @@ AlienBullet = function () {
   this.draw = function () {
     if (this.visible) {
       this.context.save();
+      this.context.strokeStyle = "#e43800";
       this.context.lineWidth = 2;
       this.context.beginPath();
       this.context.moveTo(this.x, this.y);
       this.context.lineTo(this.x-this.vel.x, this.y-this.vel.y);
+      this.context.strokeStyle = LINE_COLOR;
       this.context.stroke();
       this.context.restore();
     }
@@ -702,6 +709,7 @@ Explosion = function () {
         this.context.moveTo(line[0], line[1]);
         this.context.lineTo(line[2], line[3]);
       }
+      this.context.strokeStyle = LINE_COLOR;
       this.context.stroke();
       this.context.restore();
     }
@@ -1021,10 +1029,13 @@ Game = {
 
 $(function () {
   var canvas = $("#canvas");
+
   Game.canvasWidth  = canvas.width();
   Game.canvasHeight = canvas.height();
 
   var context = canvas[0].getContext("2d");
+  context.fillStyle = LINE_COLOR;
+
 
   Text.context = context;
   Text.face = vector_battle;
